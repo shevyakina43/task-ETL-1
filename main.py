@@ -5,7 +5,7 @@ pd.set_option("display.max_columns", 50)
 pd.set_option("display.width", 90)
 
 
-# 1. Імпорт та первинне дослідження
+# 1. импорт и первичное исследование
 
 
 url = "https://s3-eu-west-1.amazonaws.com/shanebucket/downloads/uk-500.csv"
@@ -34,7 +34,6 @@ print(df_origin.isna().sum().sort_values(ascending=False).head(20))
 print("--- duplicated ---")
 print(df_origin.duplicated().sum())
 
-
 print("--- List columns ---")
 # list_col = df.columns
 # print(list(list_col))
@@ -43,7 +42,7 @@ for i, col in enumerate(df_origin.columns):
 
 
     
-# 2. Очищення даних
+# 2. Очистка данных
 df = df_origin.copy()
 
 if COLUMNS_TO_DROP:
