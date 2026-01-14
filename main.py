@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-pd.set_option("display.max_columns", 50)
-pd.set_option("display.width", 90)
+pd.set_option("display.max_columns", 50) # настройка пандас, максимальное кол-во колонок, которое можно увидеть, по длине
+pd.set_option("display.width", 90) # обращение к настройкам пандас, макс кол-во столбцов по ширине, сколько будет выводиться в ряд символов, 
 
 
 # 1. импорт и первичное исследование
@@ -13,7 +13,7 @@ url = "https://s3-eu-west-1.amazonaws.com/shanebucket/downloads/uk-500.csv"
 
 df_origin = pd.read_csv(url)
 
-COLUMNS_TO_DROP = []
+COLUMNS_TO_DROP = [] # если надо удалить какие-то столбцы, кот читать не надо, их можно написать в квадратных скобках, большие буквы - константные переменные - переменная. которая не изменяется
 
 print("\n--- head ---")
 print(df_origin.head())
@@ -21,10 +21,10 @@ print(df_origin.head())
 print("\n--- info ---")
 print(df_origin.info())
 
-print("\n--- describe ---")
+print("\n--- describe ---") # описывает статистические данные числового типа 
 print(df_origin.describe())
 
-print("\n--- describe for str ---")
+print("\n--- describe for str ---") # описывает статистические данные строк
 print(df_origin.describe(include=[object]).T)
 
 print("--- null ---")
@@ -47,15 +47,16 @@ df = df_origin.copy()
 
 if COLUMNS_TO_DROP:
     print("\n--- delete columns in list ---")
-    df = df.drop(columns=[col for col in COLUMNS_TO_DROP if col in df.columns], errors='ignore')
+    df = df.drop(columns=[col for col in COLUMNS_TO_DROP if col in df.columns], errors='ignore')  # df используется чтобы чтото вернуть с оригинала
 
     # columns = []    
     # for col in COLUMNS_TO_DROP:
     #     if col in df.columns:
-    #         columns.append(col)
+    #         columns.append(col)  аналог верхнего решения
 else:
     print("\nCOLUMNS_TO_DROP = []")
-    
+
+  
 def standardize_text(s):
     if pd.isna(s):
         return np.nan
@@ -73,11 +74,13 @@ possible_email_cols = [c for c in df.columns if "email" in c.lower()]
 possible_web_cols = [c for c in df.columns if ("web" in c.lower() or "website" in c.lower() or "url" in c.lower())]
 possible_phone_cols = [c for c in df.columns if ("phone" in c.lower() or "telephone" in c.lower() or "tel" in c.lower())]
 possible_fax_cols = [c for c in df.columns if "fax" in c.lower()]
+# F2 горячая клавиша - изменить название, к примеру было df_raw стало df.columns
 
-# генерація списку
-# [змінна_циклу(з приміненими операціями) for змінна_циклу in де_проходимося]
+# генерация списка
+# [переменная цикла(с применяемыми операциями) for переменная цикла in где проходимся]
 # [0, 1, 2, 3]
 # [n for n in range(4)]
+
 
 print("\nPossible columns:")
 print("Email cols:", possible_email_cols)
@@ -86,7 +89,7 @@ print("Phone cols:", possible_phone_cols)
 print("Fax cols:", possible_fax_cols)
 
 
-# Приміняємо зміни
+# Применение переменные
 
 for col in df.select_dtypes(include=['object']).columns:
     df[col] = df[col].apply(standardize_text)
@@ -152,7 +155,7 @@ else:
     print("\n--- haven`t name ---")
 
 
-# 3. Створення нових колонок (Feature Engineering)
+# 3. создание нових колонок (Feature Engineering)
 
 df["full_name"] = df.first_name + " " + df.last_name
 
@@ -168,17 +171,17 @@ df["is_gmail"] = [True if "@gmail.com" in str(s).lower() else False for s in df[
 # possible_email_cols = [c for c in df.columns if "email" in c.lower()]
 
 
-# 4. Фільтрація даних
+# 4. Фильтрация даних
 
 print("\n--- підвибірки ---")
 
-# користувачі з доменом gmail.com
+# пользователи с доменом gmail.com
 gmail_users = df.loc[df['is_gmail'] == True].copy()
 # print(gmail_users)
 
 print("Gmail users:", len(gmail_users))
 
-# працівники компаній з “LLC” або “Ltd”
+# работники компании з “LLC” або “Ltd”
 
 # df["company_name"]
 
@@ -216,7 +219,7 @@ print("\nrandom 5 row")
 print(random_5)
 
 
-# 6. Групування та статистика
+# 6. группировка и статистика
 
 print("\n--- Групування та статистика ---")
 print(df["email"].str.split("@").str[-1].value_counts().head(5))
