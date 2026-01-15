@@ -16,10 +16,10 @@ df_origin = pd.read_csv(url)
 COLUMNS_TO_DROP = [] # если надо удалить какие-то столбцы, кот читать не надо, их можно написать в квадратных скобках, большие буквы - константные переменные - переменная. которая не изменяется
 
 print("\n--- head ---")
-print(df_origin.head())
+print(df_origin.head()) # вывели рялки
 
 print("\n--- info ---")
-print(df_origin.info())
+print(df_origin.info())  # информацию
 
 print("\n--- describe ---") # описывает статистические данные числового типа 
 print(df_origin.describe())
@@ -27,18 +27,18 @@ print(df_origin.describe())
 print("\n--- describe for str ---") # описывает статистические данные строк
 print(df_origin.describe(include=[object]).T)
 
-print("--- null ---")
+print("--- null ---")   # посчитали сколько пустых значений и 
 # print(df.isna().sum())
 print(df_origin.isna().sum().sort_values(ascending=False).head(20))
 
 print("--- duplicated ---")
-print(df_origin.duplicated().sum())
+print(df_origin.duplicated().sum()) # поиск дубликатов
 
 print("--- List columns ---")
 # list_col = df.columns
 # print(list(list_col))
 for i, col in enumerate(df_origin.columns):
-    print(f"{i:02d}. {col}")
+    print(f"{i:02d}. {col}")   # выволим информацию списком, какие у нас есть столбики
 
 
     
@@ -52,7 +52,7 @@ if COLUMNS_TO_DROP:
     # columns = []    
     # for col in COLUMNS_TO_DROP:
     #     if col in df.columns:
-    #         columns.append(col)  аналог верхнего решения
+    #         columns.append(col)  # аналог верхнего решения
 else:
     print("\nCOLUMNS_TO_DROP = []")
 
@@ -159,7 +159,7 @@ else:
 
 df["full_name"] = df.first_name + " " + df.last_name
 
-df["city_length"] = df["city"].apply(len)
+df["city_length"] = df["city"].apply(len) # обращаемся к len и передаем каждое значение рядка
 
 # df["city2"] = df["city"].str.len()
 
