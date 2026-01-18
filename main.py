@@ -222,9 +222,9 @@ print(random_5)
 # 6. группировка и статистика
 
 print("\n--- Групування та статистика ---") 
-print(df["email"].str.split("@").str[-1].value_counts().head(5)) # head(5) - выдели мне конткретное кол-во значений и покажи, str.split("@") - делает возможность сделать значение и обратиться к нему
+print(df["email"].str.split("@").str[-1].value_counts().head(5))        # head(5) - выдели мне конткретное кол-во значений и покажи, str.split("@") - делает возможность сделать значение и обратиться к нему, str[-1] - я обращаюсь именно к контретному значению
 
-
+print(df["city"].value_counts().head(5))
 # city
 # agg_by_city = df.groupby("city").agg(
 #     people_count = ("city", "size"),
@@ -238,12 +238,11 @@ df["domain"] = df["email"].str.split("@").str[-1]
 agg_by_city = df.groupby("city").agg(
     people_count=("first_name", "count"),
     uniq_dom=("domain", "nunique")
-).sort_values("people_count", ascending=False).head(10)
+).sort_values("people_count", ascending=False).head(10)       # згруппируй мне города, посчитай людей, кол-во доменов, добавляем сортировку, от большего к меньшему.       agg - числовая метрика, она всегла что-то подсчитывает, работает в основном с groupby, чтобы показать что и за чем идет
 
 print(agg_by_city)
 
-count_by_city = df.groupby('city').size().reset_index(name='count')
-
+count_by_city = df.groupby('city').size().reset_index(name='count') # size() - считает кол-во рядочков, count - считает не пустые значения, 
 print(count_by_city)
 
 
